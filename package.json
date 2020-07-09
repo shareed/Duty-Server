@@ -1,0 +1,30 @@
+{
+  "name": "Duty-Server",
+  "version": "1.0.0",
+  "description": "* Server Created Using ReadMe From [Nodejs-Express-Server Repo](https://github.com/shareed/Nodejs-Express-Server/tree/express-server)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shareed/Duty-Server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shareed/Duty-Server/issues"
+  },
+  "homepage": "https://github.com/shareed/Duty-Server#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
