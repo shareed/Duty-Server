@@ -10,8 +10,6 @@ router.get('/', (req, res) => {
     res.status(200).json(assigners);
   })
   .catch(error => {
-    // log error to database
-    console.log(error);
     res.status(500).json({
       message: 'Error retrieving the assigners',
     });
@@ -28,8 +26,6 @@ router.get('/:id', (req, res) => {
     }
   })
   .catch(error => {
-    // log error to database
-    console.log(error);
     res.status(500).json({
       message: 'Error retrieving the assigner',
     });
@@ -46,8 +42,6 @@ router.get('/:id/tasks', (req, res) => {
     }
   })
   .catch(error => {
-    // log error to database
-    console.log(error);
     res.status(500).json({
       message: 'Error retrieving the messages for this assigner',
     });
@@ -56,12 +50,11 @@ router.get('/:id/tasks', (req, res) => {
 
 router.post('/', (req, res) => {
   Assigners.add(req.body)
+
   .then(assigner => {
     res.status(201).json(assigner);
   })
   .catch(error => {
-    // log error to database
-    console.log(error);
     res.status(500).json({
       message: 'Error adding the assigner',
     });
@@ -78,8 +71,6 @@ router.delete('/:id', (req, res) => {
     }
   })
   .catch(error => {
-    // log error to database
-    console.log(error);
     res.status(500).json({
       message: 'Error removing the assigner',
     });
@@ -97,8 +88,6 @@ router.put('/:id', (req, res) => {
     }
   })
   .catch(error => {
-    // log error to database
-    console.log(error);
     res.status(500).json({
       message: 'Error updating the assigner',
     });
