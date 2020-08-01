@@ -1,52 +1,52 @@
 require('dotenv').config()
 const server = require('./api/server.js');
-const shortid = require('shortid')
+// const shortid = require('shortid')
 
 
 
-let assigners = []
-let tasks = []
+// let assigners = []
+// let tasks = []
 
 server.get('/', (req, res) => {
     res.json({GREETING: "This is the api for Duty created By Shannon Reed:"})
 })
 
-server.get('/duty/assigners', (req, res) => {
-    res.json({WELCOME:"YOU HAVE HIT THE ASSIGNERS ENDPOINT", assigners})
-})
+// server.get('/duty/assigners', (req, res) => {
+//     res.json({WELCOME:"YOU HAVE HIT THE ASSIGNERS ENDPOINT", assigners})
+// })
 
-server.post('/duty/assigners', (req, res) => {
-    const assignerInfo = req.body; 
-    assignerInfo.id = shortid.generate(); 
-    assigners.push(assignerInfo) 
-    res.status(201).json(assignerInfo)
-})
+// server.post('/duty/assigners', (req, res) => {
+//     const assignerInfo = req.body; 
+//     assignerInfo.id = shortid.generate(); 
+//     assigners.push(assignerInfo) 
+//     res.status(201).json(assignerInfo)
+// })
 
-server.delete('/duty/assigner/:id', (req, res) => {
-    const { id } = req.params; 
-    const deleted = assigners.find(assigner => assigner.id === id);
-    if (deleted) {
-        assigners = assigners.filter(assigner => assigner.id !== id);
-        res.status(200).json({Deleted:deleted })
-    } else {
-        res.status(404).json({meassage: "Assigner not found"});
-    }
-})
+// server.delete('/duty/assigner/:id', (req, res) => {
+//     const { id } = req.params; 
+//     const deleted = assigners.find(assigner => assigner.id === id);
+//     if (deleted) {
+//         assigners = assigners.filter(assigner => assigner.id !== id);
+//         res.status(200).json({Deleted:deleted })
+//     } else {
+//         res.status(404).json({meassage: "Assigner not found"});
+//     }
+// })
 
-server.patch('/duty/assigner/:id', (req, res) => {
-    const {id} = req.params;
-    const changes = req.body;
+// server.patch('/duty/assigner/:id', (req, res) => {
+//     const {id} = req.params;
+//     const changes = req.body;
 
-    let found = assigners.find(assigner => assigner.id === id);
+//     let found = assigners.find(assigner => assigner.id === id);
 
-    if (found) {
-        Object.assign(found, changes);
-        res.status(200).json(found);
+//     if (found) {
+//         Object.assign(found, changes);
+//         res.status(200).json(found);
 
-    } else {
-        res.status(404).json({message: "Assigner not found"})
-    }
-})
+//     } else {
+//         res.status(404).json({message: "Assigner not found"})
+//     }
+// })
 
 const port = process.env.PORT;
 
