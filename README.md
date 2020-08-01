@@ -4,4 +4,5 @@
 * GET ASSIGNERS - GET: https://dutyapi.herokuapp.com/duty/assigners
 * CREATE NEW ASSIGNER - POST : https://dutyapi.herokuapp.com/duty/assigners
 * DELETE ASSIGNER - DELETE : https://dutyapi.herokuapp.com/duty/assigners/id
+* UPDATE ASSIGNER - PATCH : https://dutyapi.herokuapp.com/duty/assigners/id
 
