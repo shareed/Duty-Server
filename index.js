@@ -1,25 +1,25 @@
 require('dotenv').config()
 const server = require('./api/server.js');
-// const shortid = require('shortid')
+const shortid = require('shortid')
 
 
 
 // let assigners = []
-// let tasks = []
+let tasks = []
 
 server.get('/', (req, res) => {
     res.json({GREETING: "This is the api for Duty created By Shannon Reed:"})
 })
 
-// server.get('/duty/assigners', (req, res) => {
-//     res.json({WELCOME:"YOU HAVE HIT THE ASSIGNERS ENDPOINT", assigners})
-// })
+server.get('/duty/assigner/:id/tasks', (req, res) => {
+    res.json({WELCOME:"YOU HAVE HIT THE ASSIGNERS TASK ENDPOINT"})
+})
 
-// server.post('/duty/assigners', (req, res) => {
-//     const assignerInfo = req.body; 
-//     assignerInfo.id = shortid.generate(); 
-//     assigners.push(assignerInfo) 
-//     res.status(201).json(assignerInfo)
+// server.post('/duty/assigner/task', (req, res) => {
+//     const assignerTasksInfo = req.body; 
+//     assignerTasksInfo.id = shortid.generate(); 
+//     tasks.push(assignerTasksInfo) 
+//     res.status(201).json(assignerTasksInfo)
 // })
 
 // server.delete('/duty/assigner/:id', (req, res) => {

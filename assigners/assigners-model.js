@@ -10,6 +10,7 @@ module.exports = {
   remove,
   update,
   findAssignerTasks,
+  findIdFromId
 };
 
 function find(query) {
@@ -51,4 +52,15 @@ function findAssignerTasks(assignerId) {
     .join('assigners as a', 't.assigner_id', 'a.id')
     .select('t.id', 't.taskname', 't.description', 'a.id as assignerId', 'a.username as assigner')
     .where({ assigner_id: assignerId });
+}
+
+async function findIdFromId(id) {
+  const assignerId = await db('assigners').where("id", id).select('id').first();
+  console.log('id in usermodel', assignerId)
+  if (assignerId) {
+      const { id } = assignerId;
+      return id;
+  } else {
+      return false;
+  }
 }
