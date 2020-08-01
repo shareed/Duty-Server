@@ -33,6 +33,21 @@ server.delete('/duty/assigner/:id', (req, res) => {
     }
 })
 
+server.patch('/duty/assigner/:id', (req, res) => {
+    const {id} = req.params;
+    const changes = req.body;
+
+    let found = assigners.find(assigner => assigner.id === id);
+
+    if (found) {
+        Object.assign(found, changes);
+        res.status(200).json(found);
+
+    } else {
+        res.status(404).json({message: "Assigner not found"})
+    }
+})
+
 const port = process.env.PORT;
 
 
