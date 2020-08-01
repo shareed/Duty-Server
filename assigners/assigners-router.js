@@ -4,7 +4,7 @@ const Assigners = require('./assigners-model.js');
 
 const router = express.Router();
 
-// router.use(restrict);
+router.use(restrict);
 
 router.get('/assigners', (req, res) => {
   Assigners.find(req.query)
@@ -50,18 +50,18 @@ router.get('/assigner/:id/tasks', (req, res) => {
   });
 });
 
-router.post('/assigner', (req, res) => {
-  Assigners.add(req.body)
+// router.post('/assigner', (req, res) => {
+//   Assigners.add(req.body)
 
-  .then(assigner => {
-    res.status(201).json(assigner);
-  })
-  .catch(error => {
-    res.status(500).json({
-      message: 'Error adding the assigner',
-    });
-  });
-});
+//   .then(assigner => {
+//     res.status(201).json(assigner);
+//   })
+//   .catch(error => {
+//     res.status(500).json({
+//       message: 'Error adding the assigner',
+//     });
+//   });
+// });
 
 router.delete('/assigner/:id', (req, res) => {
   Assigners.remove(req.params.id)

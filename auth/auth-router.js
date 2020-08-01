@@ -28,7 +28,8 @@ router.post("/register", (req, res) => {
         Assigners.findBy({ username }).first()
           .then(user => {
             if (user && bcrypt.compareSync(password, user.password)) {
-              res.json({ message: `Welcome, ${user.username}, ${user.tasks} !` })
+                req.session.assigner = user
+              res.json({ message: `Welcome, ${user.username}!` })
             } else {
               res.status(401).json({ message: 'Invalid credential' })
             }
