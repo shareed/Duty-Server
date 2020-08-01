@@ -4,6 +4,7 @@ const db = knex(config.development);
 
 module.exports = {
   find,
+  findBy,
   findById,
   add,
   remove,
@@ -15,6 +16,10 @@ function find(query) {
 
   let rows = db('assigners')
   return rows;
+}
+
+function findBy(filter) {
+  return db("assigners").where(filter);
 }
 
 function findById(id) {

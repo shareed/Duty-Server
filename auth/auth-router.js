@@ -22,4 +22,20 @@ router.post("/register", (req, res) => {
         })
     })
 
+
+    router.post("/login", (req, res) => {
+        const { username, password } = req.body
+        Assigners.findBy({ username }).first()
+          .then(user => {
+            if (user && bcrypt.compareSync(password, user.password)) {
+              res.json({ message: `Welcome, ${user.username}, ${user.tasks} !` })
+            } else {
+              res.status(401).json({ message: 'Invalid credential' })
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      })
+
     module.exports = router

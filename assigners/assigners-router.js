@@ -1,8 +1,11 @@
 const express = require('express');
 
+const restrict = require('../auth/restricted-middleware.js')
 const Assigners = require('./assigners-model.js');
 
 const router = express.Router();
+
+router.use(restrict);
 
 router.get('/', (req, res) => {
   Assigners.find(req.query)
@@ -38,12 +41,12 @@ router.get('/:id/tasks', (req, res) => {
     if (tasks.length > 0) {
       res.status(200).json(tasks);
     } else {
-      res.status(404).json({ message: 'No messages for this assigner' });
+      res.status(404).json({ message: 'No tasks for this assigner' });
     }
   })
   .catch(error => {
     res.status(500).json({
-      message: 'Error retrieving the messages for this assigner',
+      message: 'Error retrieving the task for this assigner',
     });
   });
 });
