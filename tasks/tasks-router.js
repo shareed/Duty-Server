@@ -4,7 +4,7 @@ const restrict = require('../auth/restricted-middleware.js')
 
 
 const Assigners = require('../assigners/assigners-model.js');
-const AssignerTasks = require('./tasks-model.js');
+const AssignerTasks = require('../assignersTask/assignersTask-model');
 const Tasks = require('./tasks-model.js');
 
 const router = express.Router();
@@ -12,7 +12,7 @@ const router = express.Router();
 router.use(restrict);
 
 router.get('/alltasks', (req, res) => {
-  AssignerTasks.findTasks(req.query)
+  Tasks.findTasks(req.query)
   .then(tasks => {
     res.status(200).json({WELCOME:"YOU HAVE HIT THE ASSIGNERS ENDPOINT", tasks});
   })
@@ -23,21 +23,21 @@ router.get('/alltasks', (req, res) => {
   });
 });
 
-// router.get('/:id', (req, res) => {
-//   AssignerTasks.findByTaskId(req.params.id)
-//   .then(tasks => {
-//     if (tasks) {
-//       res.status(200).json(tasks);
-//     } else {
-//       res.status(404).json({ message: 'Assigner not found' });
-//     }
-//   })
-//   .catch(error => {
-//     res.status(500).json({
-//       message: 'Error retrieving the task',
-//     });
-//   });
-// });
+router.get('/:id', (req, res) => {
+  AssignerTasks.findByTaskId(req.params.id)
+  .then(tasks => {
+    if (tasks) {
+      res.status(200).json(tasks);
+    } else {
+      res.status(404).json({ message: 'Assigner not found' });
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Error retrieving the task',
+    });
+  });
+});
 
 // router.get('/task/:id/tasks', (req, res) => {
 //   Assigners.findAssignerTasks(req.params.id)
@@ -69,27 +69,25 @@ router.get('/alltasks', (req, res) => {
 // });
 
 router.post('/add/task', (req, res) => {
-  console.log(req.body)
-  console.log(req.session.assigner.id)
   const newTask = req.body;
-  const assigner_id  = req.session.assigner.id;
-  Tasks.addTask(newTask)
+  console.log(req.session.assigner);
+  const { id } = req.session.assigner;
+  Tasks.add(newTask)
       .then(task => {
-        console.log(task);
-          // const taskId = task.id;
-          // Assigners.findIdFromId(assigner_id).then(userId => {
-          //   AssignerTasks.addTask(userId, taskId).then(userTaskID => {
+          const taskId = task.id;
+          Assigners.findIdFromName(id).then(userId => {
+              AssignerTasks.add(userId, taskId).then(userTaskID => {
                   res.status(201).json(task)
-          //     })
-          //         .catch(err => {
-          //             console.log('err 1', err)
-          //             res.status(500).json(err);
-          //         })
-          // })
-          //     .catch(err => {
-          //         console.log('err 2', err)
-          //         res.status(500).json(err);
-          //     });
+              })
+                  .catch(err => {
+                      console.log('err 1', err)
+                      res.status(500).json(err);
+                  })
+          })
+              .catch(err => {
+                  console.log('err 2', err)
+                  res.status(500).json(err);
+              });
 
       })
       .catch(err => {
@@ -97,6 +95,7 @@ router.post('/add/task', (req, res) => {
           res.status(500).json(err)
       });
 });
+
 
 
 

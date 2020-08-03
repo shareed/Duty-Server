@@ -6,7 +6,7 @@ module.exports = {
   findTasks,
   findTaskBy,
   findByTaskId,
-  addTask,
+  add,
   removeTask,
   updateTask,
   findAssignerTasks,
@@ -28,7 +28,7 @@ function findByTaskId(id) {
     .first();
 }
 
-async function addTask(task) {
+async function add(task) {
   const [id] = await db('tasks').insert(task, 'id');
   return findByTaskId(id)
 };

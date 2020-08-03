@@ -10,7 +10,7 @@ module.exports = {
   remove,
   update,
   findAssignerTasks,
-  findIdFromId
+  findIdFromName
 };
 
 function find(query) {
@@ -54,9 +54,10 @@ function findAssignerTasks(assignerId) {
     .where({ assigner_id: assignerId });
 }
 
-async function findIdFromId(id) {
+async function findIdFromName(id) {
+  console.log(id)
   const assignerId = await db('assigners').where("id", id).select('id').first();
-  console.log('id in usermodel', assignerId)
+  console.log('id in assignersmodel', assignerId)
   if (assignerId) {
       const { id } = assignerId;
       return id;
@@ -64,3 +65,14 @@ async function findIdFromId(id) {
       return false;
   }
 }
+
+// async function findIdFromName(username) {
+//   const userId = await db('users').where("username", username).select('id').first();
+//   console.log('id in usermodel', userId)
+//   if (userId) {
+//       const { id } = userId;
+//       return id;
+//   } else {
+//       return false;
+//   }
+// }
