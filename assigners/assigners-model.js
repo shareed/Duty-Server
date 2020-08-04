@@ -50,12 +50,12 @@ function update(id, changes) {
 function findAssignerTasks(assignerId) {
   return db('tasks as t')
     .join('assigners as a', 't.assigner_id', 'a.id')
-    .select('t.id', 't.taskname', 't.description', 'a.id as assignerId', 'a.username as assigner')
+    .select('t.id', 't.task_title', 't.compensation', 't.due_date', 'a.id as assignerId', 'a.username as assigner')
     .where({ assigner_id: assignerId });
 }
 
-async function findIdFromId(id) {
-  const assignerId = await db('assigners').where("id", id).select('id').first();
+async function findIdFromId(username) {
+  const assignerId = await db('assigners').where("username", username).select('id').first();
   console.log('id in usermodel', assignerId)
   if (assignerId) {
       const { id } = assignerId;

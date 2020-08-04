@@ -12,7 +12,7 @@ exports.up = function(knex) {
             .unsigned()
             .notNullable()
             .references('id')
-            .inTable('taks')
+            .inTable('tasks')
             .onDelete('CASCADE');
         tbl.text('notes', 1024);   
     })

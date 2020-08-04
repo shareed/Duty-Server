@@ -4,7 +4,7 @@ const restrict = require('../auth/restricted-middleware.js')
 
 
 const Assigners = require('../assigners/assigners-model.js');
-const AssignerTasks = require('./tasks-model.js');
+const AssignerTasks = require('../assignersTask/assignersTask-model.js');
 const Tasks = require('./tasks-model.js');
 
 const router = express.Router();
@@ -12,7 +12,7 @@ const router = express.Router();
 router.use(restrict);
 
 router.get('/alltasks', (req, res) => {
-  AssignerTasks.findTasks(req.query)
+  Tasks.findTasks(req.query)
   .then(tasks => {
     res.status(200).json({WELCOME:"YOU HAVE HIT THE ASSIGNERS ENDPOINT", tasks});
   })
@@ -23,73 +23,67 @@ router.get('/alltasks', (req, res) => {
   });
 });
 
-// router.get('/:id', (req, res) => {
-//   AssignerTasks.findByTaskId(req.params.id)
-//   .then(tasks => {
-//     if (tasks) {
-//       res.status(200).json(tasks);
-//     } else {
-//       res.status(404).json({ message: 'Assigner not found' });
-//     }
-//   })
-//   .catch(error => {
-//     res.status(500).json({
-//       message: 'Error retrieving the task',
-//     });
-//   });
-// });
 
-// router.get('/task/:id/tasks', (req, res) => {
-//   Assigners.findAssignerTasks(req.params.id)
-//   .then(tasks => {
-//     if (tasks.length > 0) {
-//       res.status(200).json(tasks);
-//     } else {
-//       res.status(404).json({ message: 'No tasks for this task' });
-//     }
-//   })
-//   .catch(error => {
-//     res.status(500).json({
-//       message: 'Error retrieving the task for this task',
-//     });
-//   });
-// });
+router.get('/:id', (req, res) => {
+  Tasks.findByTaskId(req.params.id)
+  .then(tasks => {
+    if (tasks) {
+      res.status(200).json(tasks);
+    } else {
+      res.status(404).json({ message: 'Assigner not found' });
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Error retrieving the task',
+    });
+  });
+});
 
-// router.post('/task', (req, res) => {
-//   AssignerTasks.addTask(req.body)
+router.get('/:id/tasks', (req, res) => {
+  Assigners.findAssignerTasks(req.params.id)
+  .then(tasks => {
+    if (tasks.length > 0) {
+      res.status(200).json(tasks);
+    } else {
+      res.status(404).json({ message: 'No tasks for this task' });
+    }
+  })
+  .catch(error => {
+    console.log(error)
+    res.status(500).json({
+      message: 'Error retrieving the task for this task',
+    });
+  });
+});
 
-//   .then(task => {
-//     res.status(201).json(task);
-//   })
-//   .catch(error => {
-//     res.status(500).json({
-//       message: 'Error adding the tasks',
-//     });
-//   });
-// });
 
 router.post('/add/task', (req, res) => {
   console.log(req.body)
   console.log(req.session.assigner.id)
   const newTask = req.body;
-  const assigner_id  = req.session.assigner.id;
+  const username  = req.session.assigner.username;
   Tasks.addTask(newTask)
       .then(task => {
-        console.log(task);
-          // const taskId = task.id;
-          // Assigners.findIdFromId(assigner_id).then(userId => {
-          //   AssignerTasks.addTask(userId, taskId).then(userTaskID => {
+        console.log("New Task:", task);
+          const taskId = task.id;
+          console.log("New Task Id:", taskId);
+          Assigners.findIdFromId(username).then(assignerId => {
+            console.log("Assigner Id:", assignerId);
+            // res.status(201).json(task)
+            AssignerTasks.addTask(assignerId, taskId).then(assignerTaskId => {
+              console.log("Assigner Task Id:", assignerTaskId);
                   res.status(201).json(task)
-          //     })
-          //         .catch(err => {
-          //             console.log('err 1', err)
-          //             res.status(500).json(err);
-          //         })
-          // })
-          //     .catch(err => {
-          //         console.log('err 2', err)
-          //         res.status(500).json(err);
-          //     });
+              })
+                  .catch(err => {
+                      console.log('err 1', err)
+                      res.status(500).json(err);
+                  })
+          })
+              .catch(err => {
+                  console.log('err 2', err)
+                  res.status(500).json(err);
+              });
 
       })
       .catch(err => {
@@ -106,7 +100,7 @@ router.post('/add/task', (req, res) => {
 
 
 router.delete('/:id', (req, res) => {
-  AssignerTasks.remove(req.params.id)
+  Tasks.removeTask(req.params.id)
   .then(count => {
     if (count > 0) {
       res.status(200).json({ message: 'The task has been nuked' });
@@ -123,7 +117,7 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const changes = req.body;
-  AssignerTasks.update(req.params.id, changes)
+  Tasks.updateTask(req.params.id, changes)
   .then(task => {
     if (task) {
       res.status(200).json(task);
