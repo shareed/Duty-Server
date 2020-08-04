@@ -63,6 +63,8 @@ router.post('/add/task', (req, res) => {
   console.log(req.session.assigner.id)
   const newTask = req.body;
   const username  = req.session.assigner.username;
+  const assignerID  = req.body.assigner_id;
+  if (req.session.assigner.id === assignerID) {
   Tasks.addTask(newTask)
       .then(task => {
         console.log("New Task:", task);
@@ -90,6 +92,12 @@ router.post('/add/task', (req, res) => {
           console.log('err 3', err)
           res.status(500).json(err)
       });
+    } else {
+      res.json({
+        message: 'No assigner with that id can be found',
+      });
+
+    }
 });
 
 
