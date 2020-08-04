@@ -34,34 +34,34 @@ router.get('/assigner/:id', (req, res) => {
   });
 });
 
-// router.get('/assigner/:id/tasks', (req, res) => {
-//   Assigners.findAssignerTasks(req.params.id)
-//   .then(tasks => {
-//     if (tasks.length > 0) {
-//       res.status(200).json(tasks);
-//     } else {
-//       res.status(404).json({ message: 'No tasks for this assigner' });
-//     }
-//   })
-//   .catch(error => {
-//     res.status(500).json({
-//       message: 'Error retrieving the task for this assigner',
-//     });
-//   });
-// });
+router.get('/assigner/:id/tasks', (req, res) => {
+  Assigners.findAssignerTasks(req.params.id)
+  .then(tasks => {
+    if (tasks.length > 0) {
+      res.status(200).json(tasks);
+    } else {
+      res.status(404).json({ message: 'No tasks for this assigner' });
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Error retrieving the task for this assigner',
+    });
+  });
+});
 
-// router.post('/assigner', (req, res) => {
-//   Assigners.add(req.body)
+router.post('/assigner', (req, res) => {
+  Assigners.add(req.body)
 
-//   .then(assigner => {
-//     res.status(201).json(assigner);
-//   })
-//   .catch(error => {
-//     res.status(500).json({
-//       message: 'Error adding the assigner',
-//     });
-//   });
-// });
+  .then(assigner => {
+    res.status(201).json(assigner);
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Error adding the assigner',
+    });
+  });
+});
 
 router.delete('/assigner/:id', (req, res) => {
   Assigners.remove(req.params.id)
