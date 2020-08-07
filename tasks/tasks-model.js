@@ -9,7 +9,7 @@ module.exports = {
   addTask,
   removeTask,
   updateTask,
-  findAssignerTasks,
+  // findAssignerTasks,
 };
 
 function findTasks(query) {
@@ -46,9 +46,9 @@ function updateTask(id, changes) {
     .update(changes, '*');
 }
 
-function findAssignerTasks(assignerId) {
-  return db('tasks as t')
-    .join('assigners as a', 't.assigner_id', 'a.id')
-    .select('t.id', 't.taskname', 't.description', 'a.id as assignerId', 'a.username as assigner')
-    .where({ assigner_id: assignerId });
-}
+// function findAssignerTasks(assignerId) {
+//   return db('tasks as t')
+//     .join('assigners as a', 't.assigner_id', 'a.id')
+//     .select('t.id', 't.taskname', 't.description', 'a.id as assignerId', 'a.username as assigner')
+//     .where({ assigner_id: assignerId });
+// }

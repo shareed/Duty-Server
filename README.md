@@ -5,7 +5,7 @@
 **Registration** https://dutyapi.herokuapp.com/auth/register
 **Login** https://dutyapi.herokuapp.com/auth/login
 
-| Registration | Login |
+| Registration| Login |
 |------------|------------|
 | **username** <br /> - required <br/> - unique| **username** <br /> - required| 
 | **email** <br /> - required <br/> - unique| 
