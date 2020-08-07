@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const router = require("express").Router()
+const jwt = require("jsonwebtoken")
 const Assigners = require("../assigners/assigners-model.js")
 
 
@@ -28,8 +29,11 @@ router.post("/register", (req, res) => {
         Assigners.findBy({ username }).first()
           .then(user => {
             if (user && bcrypt.compareSync(password, user.password)) {
-                req.session.assigner = user
-              res.json({ message: `Welcome, ${user.username}!` })
+              const payload = {
+                userId: user.id,
+                username: user.username,
+              }
+              res.json({ message: `Welcome, ${user.username}!`, token: jwt.sign(payload, "KEEP THIS SECRET")})
             } else {
               res.status(401).json({ message: 'Invalid credential' })
             }
