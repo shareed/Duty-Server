@@ -9,7 +9,6 @@ const Tasks = require('./tasks-model.js');
 
 const router = express.Router();
 
-router.use(restrict);
 
 router.get('/alltasks', (req, res) => {
   Tasks.findTasks(req.query)
@@ -59,8 +58,8 @@ router.get('/:id/tasks', (req, res) => {
 
 
 router.post('/add/task', (req, res) => {
-  console.log(req.body)
-  console.log(req.session.assigner.id)
+  // console.log(req.body)
+  // console.log(req.session.assigner.id)
   const newTask = req.body;
   const username  = req.session.assigner.username;
   const assignerID  = req.body.assigner_id;

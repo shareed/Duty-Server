@@ -4,7 +4,7 @@ const Assigners = require('./assigners-model.js');
 
 const router = express.Router();
 
-
+router.use(restrict)
 
 router.get('/assigners', (req, res) => {
   Assigners.find(req.query)

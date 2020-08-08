@@ -33,8 +33,8 @@ router.post("/register", (req, res) => {
                 userId: user.id,
                 username: user.username,
               }
-              res.cookie("token", jwt.sign(payload, process.env.JWT_SECRET))
-              res.json({ message: `Welcome, ${user.username}!`})
+              req.session.user = user
+              res.json({message: `Welcome ${user.username}!`, token: jwt.sign(payload, process.env.JWT_SECRET)})
             } else {
               res.status(401).json({ message: 'Invalid credential' })
             }
