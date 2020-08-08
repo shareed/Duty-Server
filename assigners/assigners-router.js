@@ -4,7 +4,7 @@ const Assigners = require('./assigners-model.js');
 
 const router = express.Router();
 
-router.use(restrict);
+
 
 router.get('/assigners', (req, res) => {
   Assigners.find(req.query)
@@ -34,7 +34,7 @@ router.get('/assigner/:id', (req, res) => {
   });
 });
 
-router.get('/assigner/:id/tasks', (req, res) => {
+router.get('/assigner/:id/tasks', restrict, (req, res) => {
   Assigners.findAssignerTasks(req.params.id)
   .then(tasks => {
     if (tasks.length > 0) {

@@ -12,6 +12,7 @@ module.exports = (req, res, next) => {
             } else {
                 console.log('From restrict-middleware',decodedToken)
                 req.user = { username: decodedToken.username };
+                console.log("user from middleware", req.user)
                 next();
             }
         });
