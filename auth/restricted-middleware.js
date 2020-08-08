@@ -3,7 +3,7 @@ module.exports = (req, res, next) => {
     const authError = {
         message: "Invalid credentials",
     }
-    const token = req.headers.authorization;
+    const token = req.cookies.token
 
     if(token) {
         jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
