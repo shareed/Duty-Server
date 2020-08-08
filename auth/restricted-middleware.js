@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization;
 
     if(token) {
-        jwt.verify(token, "KEEP THIS SECRET", (err, decodedToken) => {
+        jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
             if(err) {
                 res.status(401).json(err);
             } else {
