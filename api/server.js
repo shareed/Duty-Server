@@ -6,7 +6,7 @@ const KnexSessionStore = require("connect-session-knex")(session)
 const authRouter = require("../auth/auth-router.js");
 const assignersRouter = require('../assigners/assigners-router.js');
 const assignersTasksRouter = require('../tasks/tasks-router');
-const db = require("../data/connection");
+const db = require("../data/dbConfig");
 const server = express();
 
 
